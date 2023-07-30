@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/*
+    Структура пользователя
+ */
 @Data
 @Builder
 public class User {

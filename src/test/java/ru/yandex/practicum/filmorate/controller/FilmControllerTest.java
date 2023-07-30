@@ -7,7 +7,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.yandex.practicum.filmorate.controller.FilmController.validateFilm;
+import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateFilm;
 
 class FilmControllerTest {
 
@@ -19,7 +19,9 @@ class FilmControllerTest {
                 .releaseDate(LocalDate.of(2015, 7, 21))
                 .duration(70)
                 .build();
-        assertEquals("Валидация прошла успешно", validateFilm(film));
+        FilmController filmController = new FilmController();
+        filmController.addFilm(film);
+        assertEquals(film, filmController.getFilm().get(0));
     }
 
     @Test

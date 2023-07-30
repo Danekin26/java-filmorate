@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+/*
+    Структура фильма
+ */
 @Data
 @Builder
 public class Film {

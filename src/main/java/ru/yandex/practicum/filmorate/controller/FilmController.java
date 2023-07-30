@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateFilm;
+
+/*
+    Контроллер добавления/обновления/получения фильмов
+ */
 @RestController
 @Slf4j
 public class FilmController {
@@ -42,25 +46,5 @@ public class FilmController {
     public ArrayList<Film> getFilm() {
         log.debug("Выполнен GET-запрос");
         return new ArrayList<>(idAndFilm.values());
-    }
-
-    public static String validateFilm(Film film) {
-        if (film.getName().isBlank()) {
-            log.debug("Ошибка с названием фильма");
-            throw new ValidationException("Пустое название фильма");
-        }
-        if (film.getDescription().length() > 200) {
-            log.debug("Ошибка с описанием");
-            throw new ValidationException("Длинное описание");
-        }
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            log.debug("Ошибка с датой релиза");
-            throw new ValidationException("Дата релиза должна быть не раньше 28.12.1895");
-        }
-        if (film.getDuration() < 0) {
-            log.debug("Ошибка с длиною фильма");
-            throw new ValidationException("Продолжительность фильма не может быть отрицательным");
-        }
-        return "Валидация прошла успешно";
     }
 }

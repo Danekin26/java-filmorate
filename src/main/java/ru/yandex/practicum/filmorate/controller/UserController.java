@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateUser;
+
+/*
+    Контроллер добавления/обновления/получения пользователей
+ */
 @RestController
 @Slf4j
 public class UserController {
@@ -34,7 +38,7 @@ public class UserController {
             idAndUser.put(idUser, user);
             return user;
         } else {
-            throw new ValidationException("Пользователя с таким id не существует.");
+            throw new ValidationException("Пользователя с id = " + user.getId() + " не существует.");
         }
     }
 
@@ -42,26 +46,5 @@ public class UserController {
     public ArrayList<User> getUsers() {
         log.debug("Выполнен GET-запрос");
         return new ArrayList<>(idAndUser.values());
-    }
-
-    public static String validateUser(User user) {
-        if (user.getEmail().isBlank() || user.getEmail().indexOf('@') < 0) {
-            log.debug("Ошибка с email");
-            throw new ValidationException("email не может быть пустым и должен содержать знак @");
-        }
-        if (user.getLogin().isBlank() || user.getLogin().indexOf(' ') > 0) {
-            log.debug("Ошибка с логином");
-            throw new ValidationException("Логин не должен быть пустым и указывается без пробелов");
-        }
-        if (user.getName() == null) {
-            log.debug("Имени присваивается логин");
-            user.setName(user.getLogin());
-        }
-        if (user.getBirthday().isAfter(LocalDate.now())) {
-            log.debug("Ошибка с датой");
-            throw new ValidationException("Дата не может быть в будущем");
-        }
-        log.debug("Валидация прошла успешно");
-        return "Валидация прошла успешно";
     }
 }

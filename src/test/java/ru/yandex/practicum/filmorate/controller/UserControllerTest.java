@@ -7,7 +7,8 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.yandex.practicum.filmorate.controller.UserController.validateUser;
+import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateUser;
+
 
 class UserControllerTest {
 
@@ -19,7 +20,9 @@ class UserControllerTest {
                 .name("Serge")
                 .birthday(LocalDate.of(2000, 4, 12))
                 .build();
-        assertEquals("Валидация прошла успешно", validateUser(user));
+        UserController userController = new UserController();
+        userController.addUser(user);
+        assertEquals(user, userController.getUsers().get(0));
     }
 
     @Test
