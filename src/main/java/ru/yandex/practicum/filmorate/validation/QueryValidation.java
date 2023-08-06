@@ -21,7 +21,7 @@ public class QueryValidation {
             log.debug("Ошибка с логином");
             throw new ValidationException("Логин не должен быть пустым и указывается без пробелов");
         }
-        if (user.getName() == null) {
+        if ((user.getName() == null) || (user.getName().isBlank())) {
             log.debug("Имени присваивается логин");
             user.setName(user.getLogin());
         }
