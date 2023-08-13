@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -18,12 +16,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class FilmController {
-    private final FilmStorage filmStorage;
     private final FilmService filmService;
 
     @Autowired
-    public FilmController(FilmStorage filmStorage, FilmService filmService) {
-        this.filmStorage = filmStorage;
+    public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
@@ -33,7 +29,7 @@ public class FilmController {
     @PostMapping("/films")
     public Film addFilm(@RequestBody Film film) {
         log.debug("Выполнен POST-запрос");
-        return filmStorage.addFilm(film);
+        return filmService.addFilm(film);
     }
 
     /*
@@ -42,16 +38,16 @@ public class FilmController {
     @PutMapping("/films")
     public Film updateFilm(@RequestBody Film film) {
         log.debug("Выполнен PUT-запрос");
-        return filmStorage.updateFilm(film);
+        return filmService.updateFilm(film);
     }
 
     /*
         Получить все фильмы
      */
     @GetMapping("/films")
-    public ArrayList<Film> getFilm() {
+    public List<Film> getFilm() {
         log.debug("Выполнен GET-запрос");
-        return filmStorage.getAllFilm();
+        return filmService.getAllFilm();
     }
 
     /*
@@ -83,6 +79,6 @@ public class FilmController {
      */
     @GetMapping("/films/{id}")
     public Film getFilmById(@PathVariable String id) {
-        return filmStorage.getFilmById(Integer.parseInt(id));
+        return filmService.getFilmById(Integer.parseInt(id));
     }
 }

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateFilm;
 
 @Component
+@Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Integer, Film> idAndFilm = new HashMap<>();
     private int nextId = 1;
@@ -32,12 +34,13 @@ public class InMemoryFilmStorage implements FilmStorage {
             idAndFilm.put(idFilm, film);
             return film;
         } else {
-            throw new ValidationException("Фильма с таким id не существует.");
+            log.debug("При обновлении фильма, вызывается несуществующий идентификатор");
+            throw new ValidationException("Фильма с id - " + film.getId() + " не существует.");
         }
     }
 
     @Override
-    public ArrayList<Film> getAllFilm() {
+    public List<Film> getAllFilms() {
         return new ArrayList<>(idAndFilm.values());
     }
 
@@ -60,7 +63,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public List<Film> getPopularFilms(int countFilms) {
         if (countFilms < 0) throw new NotFoundException("Размер списка рейтинговых фильмов не может быть меньше 0");
-        return getAllFilm().stream()
+        return getAllFilms().stream()
                 .sorted((film1, film2) -> film2.getListLikes() - film1.getListLikes())
                 .limit(countFilms)
                 .collect(Collectors.toList());

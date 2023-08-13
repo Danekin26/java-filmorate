@@ -1,13 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
-import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -17,11 +16,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class UserController {
-    private final UserStorage userStorage;
     private final UserService userService;
 
-    public UserController(UserStorage userStorage, UserService userService) {
-        this.userStorage = userStorage;
+    @Autowired
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -31,7 +29,7 @@ public class UserController {
     @PostMapping("/users")
     public User addUser(@RequestBody User user) {
         log.debug("Выполнен POST-запрос");
-        return userStorage.addUser(user);
+        return userService.addUser(user);
     }
 
     /*
@@ -40,16 +38,16 @@ public class UserController {
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
         log.debug("Выполнен PUT-запрос");
-        return userStorage.updateUser(user);
+        return userService.updateUser(user);
     }
 
     /*
         Получить всех пользователей
      */
     @GetMapping("/users")
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         log.debug("Выполнен GET-запрос");
-        return userStorage.getUsers();
+        return userService.getUsers();
     }
 
     /*
@@ -65,7 +63,7 @@ public class UserController {
      */
     @DeleteMapping("/users/{id}/friends/{friendId}")
     public User deleteFriend(@PathVariable String id, @PathVariable String friendId) {
-        return userService.removeToFriends(Integer.parseInt(id), Integer.parseInt(friendId));
+        return userService.removeFromFriends(Integer.parseInt(id), Integer.parseInt(friendId));
     }
 
     /*
@@ -89,6 +87,6 @@ public class UserController {
      */
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable String id) {
-        return userStorage.getUserById(Integer.parseInt(id));
+        return userService.getUserById(Integer.parseInt(id));
     }
 }

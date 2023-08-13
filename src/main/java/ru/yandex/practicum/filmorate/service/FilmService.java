@@ -37,4 +37,32 @@ public class FilmService {
     public List<Film> getPopularFilms(int countFilms) {
         return filmStorage.getPopularFilms(countFilms);
     }
+
+    /*
+        Добавить фильм
+     */
+    public Film addFilm(Film film) {
+        return filmStorage.addFilm(film);
+    }
+
+    /*
+        Обновить фильм
+     */
+    public Film updateFilm(Film film) {
+        return filmStorage.updateFilm(film);
+    }
+
+    /*
+        Получить все фильмы
+     */
+    public List<Film> getAllFilm() {
+        return filmStorage.getAllFilms();
+    }
+
+    /*
+        Получить фильм по id
+     */
+    public Film getFilmById(int id) {
+        return filmStorage.getFilmById(id);
+    }
 }

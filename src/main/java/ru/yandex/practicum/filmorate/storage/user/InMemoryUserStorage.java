@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
@@ -9,6 +10,7 @@ import java.util.*;
 import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateUser;
 
 @Component
+@Slf4j
 public class InMemoryUserStorage implements UserStorage {
     private final HashMap<Integer, User> idAndUser = new HashMap<>();
     private int nextId = 1;
@@ -30,12 +32,13 @@ public class InMemoryUserStorage implements UserStorage {
             idAndUser.put(idUser, user);
             return user;
         } else {
+            log.debug("При обновлении пользователя, вызывается несуществующий идентификатор");
             throw new ValidationException("Пользователя с id = " + user.getId() + " не существует.");
         }
     }
 
     @Override
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return new ArrayList<>(idAndUser.values());
     }
 

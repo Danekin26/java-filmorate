@@ -27,7 +27,7 @@ public class UserService {
     /*
         Удалить друга
      */
-    public User removeToFriends(int idUser, int idExFriend) {
+    public User removeFromFriends(int idUser, int idExFriend) {
         return userStorage.removeUserToFriends(idUser, idExFriend);
     }
 
@@ -47,5 +47,33 @@ public class UserService {
         return userStorage.getUsers().stream()
                 .filter(p -> p.getFriends().contains(idUser))
                 .collect(Collectors.toList());
+    }
+
+    /*
+        Добавить пользователя
+     */
+    public User addUser(User user) {
+        return userStorage.addUser(user);
+    }
+
+    /*
+        Обновление пользователя
+     */
+    public User updateUser(User user) {
+        return userStorage.updateUser(user);
+    }
+
+    /*
+        Получить всех пользователей
+     */
+    public List<User> getUsers() {
+        return userStorage.getUsers();
+    }
+
+    /*
+        Получить пользователя по id
+     */
+    public User getUserById(int idUser) {
+        return userStorage.getUserById(idUser);
     }
 }
