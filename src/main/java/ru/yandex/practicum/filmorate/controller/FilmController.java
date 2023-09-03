@@ -16,12 +16,8 @@ import java.util.List;
 @Slf4j
 @Component
 public class FilmController {
-    private final FilmService filmService;
-
     @Autowired
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
+    private FilmService filmService;
 
     /*
         Добавить фильм
@@ -80,5 +76,10 @@ public class FilmController {
     @GetMapping("/films/{id}")
     public Film getFilmById(@PathVariable String id) {
         return filmService.getFilmById(Integer.parseInt(id));
+    }
+
+    @DeleteMapping("/films/{id}")
+    public void deleteFilm(@PathVariable Integer id) {
+        filmService.deleteFilm(id);
     }
 }

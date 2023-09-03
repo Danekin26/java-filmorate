@@ -12,6 +12,8 @@ import java.time.LocalDate;
  */
 @Slf4j
 public class QueryValidation {
+    private static Film film;
+
     public static void validateUser(User user) {
         if (user.getEmail().isBlank() || user.getEmail().indexOf('@') < 0) {
             log.debug("Ошибка с email");
@@ -33,6 +35,7 @@ public class QueryValidation {
     }
 
     public static void validateFilm(Film film) {
+        QueryValidation.film = film;
         if (film.getName().isBlank()) {
             log.debug("Ошибка с названием фильма");
             throw new ValidationException("Пустое название фильма");

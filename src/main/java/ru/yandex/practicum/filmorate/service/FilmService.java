@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
@@ -9,13 +10,9 @@ import java.util.List;
 
 @Service
 public class FilmService {
-
-    private final FilmStorage filmStorage;
-
     @Autowired
-    public FilmService(FilmStorage filmStorage) {
-        this.filmStorage = filmStorage;
-    }
+    @Qualifier("databaseFilmStorage")
+    private FilmStorage filmStorage;
 
     /*
         Поставить лайк
@@ -64,5 +61,12 @@ public class FilmService {
      */
     public Film getFilmById(int id) {
         return filmStorage.getFilmById(id);
+    }
+
+    /*
+    Удалить фильм по id
+    */
+    public void deleteFilm(Integer idFilm) {
+        filmStorage.deleteFilm(idFilm);
     }
 }

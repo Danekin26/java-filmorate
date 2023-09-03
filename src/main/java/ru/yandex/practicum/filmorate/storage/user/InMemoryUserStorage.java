@@ -47,7 +47,6 @@ public class InMemoryUserStorage implements UserStorage {
         validateUser(getUserById(idUser));
         validateUser(getUserById(idPotentialFriend));
         getUserById(idUser).getFriends().add(idPotentialFriend);
-        getUserById(idPotentialFriend).getFriends().add(idUser);
         return getUserById(idUser);
     }
 
