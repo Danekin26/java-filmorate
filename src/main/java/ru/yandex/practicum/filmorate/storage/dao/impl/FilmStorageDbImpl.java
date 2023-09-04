@@ -157,11 +157,7 @@ public class FilmStorageDbImpl implements FilmStorage {
 
     private boolean checkRepeatGenreForFilm(int idFilm, int idGenre) {
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet("SELECT * FROM film_genre WHERE id_film = ? AND id_genre = ?", idFilm, idGenre);
-        if (sqlRowSet.next()) {
-            return true;
-        } else {
-            return false;
-        }
+        return sqlRowSet.next();
     }
 
     private Set<Integer> getLikesForFilm(int idFilm) {

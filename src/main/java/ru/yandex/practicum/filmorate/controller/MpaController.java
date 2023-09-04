@@ -12,6 +12,9 @@ import ru.yandex.practicum.filmorate.service.MpaService;
 
 import java.util.List;
 
+/*
+    Контроллер для управления данными рейтинга
+ */
 @RestController
 @Component
 @RequiredArgsConstructor
@@ -20,11 +23,17 @@ public class MpaController {
     @Autowired
     private MpaService mpaService;
 
+    /*
+        Получить рейтинг по id
+     */
     @GetMapping("/{id}")
     public Mpa getMpaById(@PathVariable int id) {
         return mpaService.getMpaById(id);
     }
 
+    /*
+        Получить все виды рейтинга
+     */
     @GetMapping()
     public List<Mpa> getAllMpa() {
         return mpaService.getAllMpa();

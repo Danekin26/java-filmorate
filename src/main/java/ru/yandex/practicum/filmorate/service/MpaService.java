@@ -14,7 +14,6 @@ public class MpaService {
     @Qualifier("databaseMpaStorage")
     private MpaStorage mpaStorage;
 
-
     public Mpa getMpaById(int id) {
         return mpaStorage.getMpaById(id);
     }

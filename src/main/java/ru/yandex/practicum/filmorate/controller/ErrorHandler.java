@@ -8,6 +8,9 @@ import ru.yandex.practicum.filmorate.exceptions.ErrorResponse;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 
+/*
+    Контроллер организации вывода информации об исключениях
+ */
 @RestControllerAdvice
 public class ErrorHandler {
     /*

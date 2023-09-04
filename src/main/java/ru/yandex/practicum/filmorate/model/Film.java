@@ -25,7 +25,6 @@ public class Film {
     private List<Genre> genres;
     private Set<Integer> likes;
     private Mpa mpa;
-    //private Integer rate;
 
     public void addLikeForSet(int idUser) {
         likes.add(idUser);
@@ -33,13 +32,5 @@ public class Film {
 
     public void removeLikeForSet(int idUser) {
         likes.remove(idUser);
-    }
-
-    public void addGenre(Genre newGenre) {
-        genres.add(newGenre);
-    }
-
-    public void genreRemove(String removeGenre) {
-        genres.remove(removeGenre);
     }
 }

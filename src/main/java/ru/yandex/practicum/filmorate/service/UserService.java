@@ -41,13 +41,9 @@ public class UserService {
      */
     public List<User> getAllFriendsUser(int idUser) {
         User user = getUserById(idUser);
-        List<User> f = user.getFriends().stream()
+        return user.getFriends().stream()
                 .map(userStorage::getUserById)
                 .collect(Collectors.toList());
-        /*return userStorage.getUsers().stream()
-                .filter(p -> p.getFriends().contains(idUser))
-                .collect(Collectors.toList());*/
-        return f;
     }
 
     /*
