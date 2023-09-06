@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -10,12 +11,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private final UserStorage userStorage;
-
     @Autowired
-    public UserService(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
+    @Qualifier("databaseUserStorage")
+    private UserStorage userStorage;
 
     /*
         Добавить друга
@@ -40,12 +38,11 @@ public class UserService {
 
     /*
         Получить список всех друзей пользователя
-
-        При стриме подается на вход список всех пользователей и они фильтруются по id, указанным в списке друзей пользователя
      */
     public List<User> getAllFriendsUser(int idUser) {
-        return userStorage.getUsers().stream()
-                .filter(p -> p.getFriends().contains(idUser))
+        User user = getUserById(idUser);
+        return user.getFriends().stream()
+                .map(userStorage::getUserById)
                 .collect(Collectors.toList());
     }
 

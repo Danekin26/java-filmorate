@@ -40,4 +40,9 @@ public interface FilmStorage {
         Получить фильм по id
      */
     Film getFilmById(int idFilm);
+
+    /*
+    Удалить фильм по id
+    */
+    void deleteFilm(Integer id);
 }

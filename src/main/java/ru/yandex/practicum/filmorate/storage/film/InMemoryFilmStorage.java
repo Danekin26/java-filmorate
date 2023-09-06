@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static ru.yandex.practicum.filmorate.validation.QueryValidation.validateFilm;
 
-@Component
+@Component("inMemoryFilmStorage")
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Integer, Film> idAndFilm = new HashMap<>();
@@ -64,7 +64,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     public List<Film> getPopularFilms(int countFilms) {
         if (countFilms < 0) throw new NotFoundException("Размер списка рейтинговых фильмов не может быть меньше 0");
         return getAllFilms().stream()
-                .sorted((film1, film2) -> film2.getListLikes() - film1.getListLikes())
+                .sorted((film1, film2) -> film2.getLikes().size() - film1.getLikes().size())
                 .limit(countFilms)
                 .collect(Collectors.toList());
     }
@@ -73,5 +73,10 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film getFilmById(int idFilm) {
         validateFilm(idAndFilm.get(idFilm));
         return idAndFilm.get(idFilm);
+    }
+
+    @Override
+    public void deleteFilm(Integer id) {
+        idAndFilm.remove(id);
     }
 }
